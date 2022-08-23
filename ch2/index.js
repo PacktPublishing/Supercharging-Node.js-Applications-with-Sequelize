@@ -1,7 +1,7 @@
-var express = require("express");
+const express = require("express");
 
-var app = express();
-var models = require("./models");
+const app = express();
+const models = require("./models");
 
 models.sequelize.sync().then(function () {
     console.log("> database has been synced");
@@ -10,12 +10,12 @@ models.sequelize.sync().then(function () {
 });
 
 app.get('/', async function (req, res) {
-    var airplanes = await models.Airplane.findAll();
+    const airplanes = await models.Airplane.findAll();
     res.send("<pre>" + JSON.stringify(airplanes, undefined, 4) + "</pre>");
 });
 
 app.get('/airplanes/:id', async function (req, res) {
-    var airplane = await models.Airplane.findByPk(req.params.id);
+    const airplane = await models.Airplane.findByPk(req.params.id);
     if (!airplane) {
         return res.sendStatus(404);
     }
