@@ -1,0 +1,17 @@
+{
+  "name": "airline",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.10",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0"
+  }
+}
