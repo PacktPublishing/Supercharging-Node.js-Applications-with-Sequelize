@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Avalon Airlines!</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js" defer></script>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Welcome to Avalon Airlines!
+      </h1>
+      <p class="subtitle">
+        Where would you like to go <strong>today</strong>?
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="columns" x-data="{
+                    flights: [],
+                    selected: {}
+                  }" x-init="
+                    fetch('/flights')
+                      .then(res => res.json())
+                      .then(res => flights = res)
+                  ">
+        <div class="column">
+          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>Origin</th>
+                <th>Departure</th>
+                <th>Departure Time</th>
+                <th>Model</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <template x-for="flight in flights">
+                <tr>
+                  <td x-text="flight.originAirport"></td>
+                  <td x-text="flight.destinationAirport"></td>
+                  <td x-text="flight.departureTime"></td>
+                  <td x-text="flight.Airplane.planeModel"></td>
+                  <td><button x-on:click="selected = flight" class="button is-primary is-light is-small">Book
+                      Flight</button></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="column">
+          <div x-show="!!selected.id">
+            <section class="hero is-info">
+              <div class="hero-body">
+                <p class="title">
+                  <span x-text="selected.originAirport"></span> &#8594; <span
+                    x-text="selected.destinationAirport"></span>
+                </p>
+                <p class="subtitle">
+                  Departs at <span x-text="selected.departureTime"></span>
+                </p>
+              </div>
+            </section>
+
+            <form x-data="flightForm()" @submit.prevent="submit">
+              <div x-show="!!data.success">
+                <section class="hero is-primary">
+                  <div class="hero-body">
+                    <p class="title">
+                      Your boarding ticket has been created!
+                    </p>
+                    <p class="subtitle">
+                      Your seat for this flight is <span x-text="data.seat"></span>
+                    </p>
+                  </div>
+                </section>
+                <div class="mt-4 field is-grouped is-grouped-centered">
+                  <p class="control">
+                    <a class="button is-light" x-on:click="selected = {}; data.success = false; data.seat = ''">
+                      OK
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div x-show="!data.success">
+                <div class="field pt-4">
+                  <label class="label">Full Name</label>
+                  <div class="control">
+                    <input class="input" type="text" x-model="data.name" placeholder="e.g Alex Smith">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label">Your Email</label>
+                  <div class="control">
+                    <input class="input" type="email" x-model="data.email"
+                      placeholder="e.g. alexsmith@avalon-airlines.com">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label">Seat Selection</label>
+                  <div class="control">
+                    <input class="input" type="text" x-model="data.seat" placeholder="e.g. 1A">
+                  </div>
+                </div>
+
+                <div class="field is-grouped is-grouped-centered">
+                  <p class="control">
+                    <button type="submit" :disabled="loading" class="button is-primary">
+                      Purchase Ticket
+                    </button>
+                  </p>
+                  <p class="control">
+                    <a class="button is-light" x-on:click="selected = {}; data.success = false; formMessages = []">
+                      Cancel
+                    </a>
+                  </p>
+                </div>
+
+                <template x-for="message in formMessages">
+                  <article class="message is-warning">
+                    <div class="message-header">
+                      <p>A correction is required</p>
+                    </div>
+                    <div x-text="message" class="message-body"></div>
+                  </article>
+                </template>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function flightForm() {
+      return {
+        data: {
+          email: "",
+          name: "",
+          seat: "",
+          success: false,
+        },
+        formMessages: [],
+        loading: false,
+
+        submit(e) {
+          this.loading = true;
+
+          fetch("/book-flight", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            },
+            body: JSON.stringify({
+              ...this.data,
+              scheduleId: this.selected.id,
+            }),
+          })
+            .then(async (response) => {
+              const { headers, ok, message, body } = response;
+
+              const isJson = headers.get('content-type')?.includes('application/json');
+              const data = isJson ? await response.json() : await response.text();
+
+              if (!ok) {
+                return Promise.reject(isJson ? Object.values(data) : data);
+              }
+
+              // boarding ticket was successfully created
+              this.formMessages = [];
+              this.data = {
+                email: "",
+                name: "",
+                seat: this.data.seat,
+                success: true,
+              }
+            })
+            .catch((err) => {
+              this.formMessages = Array.isArray(err) ? err : [err];
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        },
+      };
+    }
+  </script>
+</body>
+
+</html>
