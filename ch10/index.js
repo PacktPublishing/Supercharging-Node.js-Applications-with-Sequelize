@@ -6,7 +6,7 @@ const AdminJSExpress = require("@adminjs/express");
 const AdminJSSequelize = require("@adminjs/sequelize");
 
 const express = require("express");
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 
 const app = express();
 const models = require("./models");

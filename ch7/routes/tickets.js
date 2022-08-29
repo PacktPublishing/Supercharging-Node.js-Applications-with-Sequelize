@@ -1,6 +1,6 @@
 const models = require("../models");
 
-async function bookTicket(req, res) {
+export async function bookTicket(req, res) {
     try {
         const { scheduleId, seat } = req.body;
 
@@ -21,7 +21,7 @@ async function bookTicket(req, res) {
                 return boardingTicket;
         });
 
-        return res.json(t.toJSON());
+        return res.json(t);
     } catch (error) {
         return res.status(400).send(error.toString());
     }

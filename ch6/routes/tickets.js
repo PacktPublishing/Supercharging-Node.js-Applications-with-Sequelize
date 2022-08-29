@@ -21,7 +21,7 @@ async function bookTicket(req, res) {
                 return boardingTicket;
         });
 
-        return res.json(t.toJSON());
+        return res.json(t);
     } catch (error) {
         return res.status(400).send(error.toString());
     }
