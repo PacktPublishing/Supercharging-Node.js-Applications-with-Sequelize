@@ -10,7 +10,10 @@ const Sequelize = require('@sequelize/core');
 const logger = require('pino')();
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
+console.log(process.env)
+console.log(process.env.NODE_ENV)
 const config = require(__dirname + '/../config/config.json')[env];
+console.log(config)
 const db = {};
 
 config.logging = (msg) => logger.info(msg);

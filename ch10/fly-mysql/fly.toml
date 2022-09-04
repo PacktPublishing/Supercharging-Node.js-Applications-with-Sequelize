@@ -1,0 +1,22 @@
+app = "delicate-pine-9213"
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[mounts]
+  source="mysqldata"
+  destination="/data"
+
+[env]
+  MYSQL_DATABASE = "avalon_airlines"
+  MYSQL_USER = "avalon_airlines"
+
+[build]
+  image = "mysql:5.7"
+
+[experimental]
+  cmd = [
+    "--default-authentication-plugin",
+    "mysql_native_password",
+    "--datadir",
+    "/data/mysql"
+  ]

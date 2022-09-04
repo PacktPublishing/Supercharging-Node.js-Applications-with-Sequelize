@@ -1,6 +1,6 @@
 const models = require("../models");
 
-export async function bookTicket(req, res) {
+async function bookTicket(req, res) {
     try {
         const { scheduleId, seat } = req.body;
 
