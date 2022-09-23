@@ -72,6 +72,6 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 **Daniel Durante**
 Daniel Durante has nearly a decade of experience in creating Node.js applications with Sequelize. He is currently working on setting up applications and infrastructures for blockchain and options trading analysis. He has been working with Genesis Volatility for the last three years, and currently works as a chief technical officer.
 
-## Other books by the authors
+## Other books by the author
 [Rust Standard Library Cookbook - First Edition](https://www.packtpub.com/product/rust-standard-library-cookbook/9781788623926?utm_source=github&utm_medium=repository&utm_campaign=9781788623926)
 
