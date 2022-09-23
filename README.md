@@ -2,8 +2,6 @@
 
 <a href="https://www.packtpub.com/product/supercharging-node-js-applications-with-sequelize/9781801811552?utm_source=github&utm_medium=repository&utm_campaign=9781801076012"><img src="https://static.packt-cdn.com/products/9781801811552/cover/smaller" alt="" height="256px" align="right"></a>
 
-This is the code repository for [](https://www.packtpub.com/product/supercharging-node-js-applications-with-sequelize/9781801811552?utm_source=github&utm_medium=repository&utm_campaign=9781801076012), published by Packt.
-
 **Create high-quality Node.js apps effortlessly while interacting with your SQL database**
 
 ## What is this book about?
