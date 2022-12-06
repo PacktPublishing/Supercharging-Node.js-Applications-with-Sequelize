@@ -23,31 +23,12 @@ alt="https://www.packtpub.com/" border="5" /></a>
 
 The code will look like the following:
 ```
-Code in text: Indicates code words in text, database table names, folder names, filenames, file
-extensions, pathnames, dummy URLs, user input, and Twitter handles. Here is an example: Mount
-the downloaded WebStorm-10*.dmg disk image file as another disk in your system.
-
 A block of code is set as follows:
 models.sequelize.sync({
 force: true,
 logging: false
 })
 
-When we wish to draw your attention to a particular part of a code block, the relevant lines or items
-are set in bold:
-// INT(4)
-var unsignedInteger = DataTypes.NUMBER({
-length: 4,
-zerofill: false,
-unsigned: true,
-});
-
-Any command-line input or output is written as follows:
-sudo apt-get update
-sudo apt install mysql-server
-Bold: Indicates a new term, an important word, or words that you see onscreen. For instance, words
-in menus or dialog boxes appear in bold. Here is an example: We will want to select the Developer
-Default and Install all products options.
 ```
 
 **Following is what you need for this book:**
